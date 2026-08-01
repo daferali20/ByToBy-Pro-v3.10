@@ -1,0 +1,83 @@
+# ============================================
+# ByToBy-Pro-v3 - Main Configuration
+# ============================================
+
+app:
+  name: "ByToBy-Pro-v3"
+  version: "3.0.0"
+  environment: "development"
+  debug: true
+  secret_key: "${SECRET_KEY}"
+  
+server:
+  host: "0.0.0.0"
+  port: 8501
+  workers: 4
+  timeout: 300
+  
+database:
+  postgresql:
+    url: "${DATABASE_URL}"
+    pool_size: 10
+    max_overflow: 20
+    pool_timeout: 30
+    pool_recycle: 3600
+    
+  redis:
+    url: "${REDIS_URL}"
+    db: 0
+    decode_responses: true
+    
+  mongodb:
+    url: "${MONGODB_URL}"
+    database: "bytoby"
+
+data_providers:
+  primary:
+    - polygon
+    - yahoo
+    - finnhub
+    
+  backup:
+    - alpha_vantage
+    - twelvedata
+    
+  rate_limits:
+    polygon: 5  # requests per second
+    yahoo: 10
+    finnhub: 30
+    alpha_vantage: 5
+
+analysis:
+  technical:
+    indicators:
+      - sma
+      - ema
+      - rsi
+      - macd
+      - bollinger_bands
+      - ichimoku
+      - fibonacci
+      - atr
+      - stochastic
+      - williams_r
+      
+    periods:
+      short: 20
+      medium: 50
+      long: 200
+      
+  fundamental:
+    metrics:
+      - pe_ratio
+      - eps
+      - revenue_growth
+      - profit_margin
+      - debt_to_equity
+      - return_on_equity
+      - book_value
+      - dividend_yield
+      
+  risk:
+    var_confidence: 0.95
+    var_period: 252  # trading days
